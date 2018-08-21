@@ -36,7 +36,7 @@ colnames(finalData) <- c("subject", "activity", featureName[featureIndex])
 # 3. Uses descriptive activity names to name the activities in the data set
 
 ## step 1: load activity data into R
-activityName <- read.table("./data/UCI HAR Dataset/activity_labels.txt")
+activityName <- read.table("UCI HAR Dataset/activity_labels.txt")
 
 ## step 2: replace 1 to 6 with activity names
 finalData$activity <- factor(finalData$activity, levels = activityName[,1], labels = activityName[,2])
@@ -55,6 +55,6 @@ names(finalData) <- gsub("-std", "Std", names(finalData))
 library(dplyr)
 groupData <- finalData %>%
   group_by(subject, activity) %>%
-  summarise_each(funs(mean))
+  summarise_all(funs(mean))
 
 write.table(groupData, "./Getting_and_Cleaning_data_Project/MeanData.txt", row.names = FALSE)
